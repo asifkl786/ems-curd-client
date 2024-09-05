@@ -7,10 +7,6 @@ import { useNavigate } from 'react-router-dom';
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [formData, setFormData] = useState({ name: "", email: "", position: "" });
-  const [isEditing, setIsEditing] = useState(false);
-
   
   // Thease function fetch employee data from database
   useEffect(() => {
@@ -44,13 +40,11 @@ function EmployeeList() {
   return (
     <div className="container mx-auto p-10">
       <h1 className="text-2xl font-bold mb-4 text-center bg-indigo-950 text-white">Employee List</h1>
-
-      <button
-        className="mb-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-       // onClick={handleCreate}
-      >
+      {/* <button
+        className="mb-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
         <Link to="/add-employee">Create New Employee</Link>
-      </button>
+      </button>*/}
+     
 
       <table className="min-w-full bg-white rounded-lg shadow-md">
         <thead>
