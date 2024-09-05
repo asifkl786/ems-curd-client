@@ -1,48 +1,67 @@
+import  React,{ useEffect, useState } from "react";
+import { useParams,useNavigate } from 'react-router-dom';
+import { getEmployee,updateEmployee } from "../services/EmployeeService";
 
-import React, { useState } from 'react';
-import { createEmployee } from '../services/EmployeeService';
-import { useNavigate } from 'react-router-dom'
 
-const Employee = () => {
+const UpdateEmployee = () => {
+
+  // Thease state save data come  from database
+  const [firstName, setFirstName] = useState([]);
+  const [lastName, setlastName] = useState([]);
+  const [email, setEmail] = useState([]);
+  const [mobileNumber , setMobileNumber] = useState([]);
+  const [dateofbirth , setDateOfBirth] = useState([]);
+  const [gender , setGender] = useState([]);
+  const [country , setCountry] = useState([]);
+  const [file , setFile] = useState([]);
   
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    mobileNumber: '',
-    dateofbirth: '',
-    gender: '',
-    country: '',
-    file: '',
-  });
 
+  const [errors, setErrors] = useState({
+      firstName: "",
+      middleName:'',
+      lastName:'',
+      email:'',
+      mobileNumber:''
+  })
+   
+  
+  // Thease line of code naviagate to the components
+    const navigator = useNavigate();
+    const {id} = useParams();
 
-  const navigator = useNavigate();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  }; 
-
+  // This method emplooyee (is method se data database se aaya h corrosponding id)
+  useEffect(() =>{
+         if(id){
+              getEmployee(id).then((response) => {
+                  setFirstName(response.data.firstName);
+                  setlastName(response.data.lastName);
+                  setEmail(response.data.email);
+                  setMobileNumber(response.data.mobileNumber);
+              }).catch(error => {
+                  console.error(error)
+              })
+         }
+  }, [id])
+  
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic here
-    createEmployee(formData).then((response) => {
-        console.log(response.data);
-        navigator('/')
-        }).catch(error => {
-        console.error(error);
-    })
-    console.log('Form Data Submitted:', formData);
+    const formData = {firstName,lastName,email,mobileNumber,gender,dateofbirth,file,country};
+    updateEmployee(id,formData).then((response) => {
+      console.log(response.data);
+      navigator('/')
+      }).catch(error => {
+      console.error(error);
+  })
+  console.log('Form Data Submitted:', formData);
+  
   };
 
   return (
     <>
       <div className="max-w-lg mx-auto p-4 mt-4 bg-white shadow-lg rounded-lg">
-          <h2 className="p-3 bg-yellow-400 text-2xl font-bold mb-2 text-gray-700 text-center">Add Employee Information Page</h2>
+          <h2 className="p-3 bg-yellow-400 text-2xl font-bold mb-2 text-gray-700 text-center">Update Employee Information Page</h2>
             <form onSubmit={handleSubmit}>
               <div className='row gap-2 grid grid-cols-2'>
                 <div className="mb-4">
@@ -53,8 +72,8 @@ const Employee = () => {
                     type="text"
                     id="firstname"
                     name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your name"
                     required
@@ -68,8 +87,8 @@ const Employee = () => {
                   type='text'
                   id="lastname"
                   name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
+                  value={lastName}
+                  onChange={(e) => setlastName(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter your lastname"
                   required
@@ -86,8 +105,8 @@ const Employee = () => {
                     type="email"
                     id="email"
                     name="email"
-                    value={formData.email}
-                    onChange={handleChange}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your name"
                     required
@@ -101,8 +120,8 @@ const Employee = () => {
                   type='number'
                   id="mobilenumber"
                   name="mobileNumber"
-                  value={formData.mobileNumber}
-                  onChange={handleChange}
+                  value={mobileNumber}
+                  onChange={(e) => setMobileNumber(e.target.value)}
                   className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter your lastname"
                   required
@@ -119,8 +138,8 @@ const Employee = () => {
                     type='date'
                     id="dateofbirth"
                     name="dateofbirth"
-                    value={formData.dateofbirth}
-                    onChange={handleChange}
+                    value={dateofbirth}
+                    onChange={(e) => setDateOfBirth(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your lastname"
                     required
@@ -135,10 +154,9 @@ const Employee = () => {
                     id="male"
                     name="gender"
                     value="Male"
-                    checked={formData.gender === 'Male'}
-                    onChange={handleChange}
+                    checked={gender === 'Male'}
+                    onChange={(e) => setGender(e.target.value)}
                     className="form-radio text-blue-500"
-                    required
                   />
                   <span className="ml-2 text-gray-700">Male</span>
                 </label>
@@ -148,10 +166,9 @@ const Employee = () => {
                     id="female"
                     name="gender"
                     value="Female"
-                    checked={formData.gender === 'Female'}
-                    onChange={handleChange}
+                    checked={gender === 'Female'}
+                    onChange={(e) => setGender(e.target.value)}
                     className="form-radio text-blue-500"
-                    required
                   />
                   <span className="ml-2 text-gray-700">Female</span>
                 </label>
@@ -161,10 +178,9 @@ const Employee = () => {
                     id="other"
                     name="gender"
                     value="Other"
-                    checked={formData.gender === 'Other'}
-                    onChange={handleChange}
+                    checked={gender === 'Other'}
+                    onChange={(e) => setGender(e.target.value)}
                     className="form-radio text-blue-500"
-                    required
                   />
                   <span className="ml-2 text-gray-700">Other</span>
                 </label>
@@ -180,8 +196,8 @@ const Employee = () => {
                       <select
                         id="country"
                         name="country"
-                        value={formData.country}
-                        onChange={handleChange}
+                        value={country}
+                        onChange={(e) => setCountry(e.target.value)}
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                       >
                         <option value="Select your country" disabled>Select your country</option>
@@ -201,8 +217,8 @@ const Employee = () => {
                     type='file'
                     id="file"
                     name="file"
-                    value={formData.file}
-                    onChange={handleChange}
+                    value={file}
+                    onChange={(e) => setFile(e.target.value)}
                     className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your lastname"
                     required
@@ -214,7 +230,7 @@ const Employee = () => {
                 type="submit"
                 className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                Add Employee
+                Update Employee Information
               </button>
             </form>
       </div>      
@@ -223,4 +239,4 @@ const Employee = () => {
   )
 }
 
-export default Employee
+export default UpdateEmployee
