@@ -19,6 +19,9 @@ const API_URL = 'http://localhost:8080/api/employees';
   export const updateEmployee = (employeeId,formData) => axios.put(API_URL + '/' + employeeId , formData);
   
   // Delete an employee
-  export const deleteEmployee = async (id) => {
+  export const deleteEmployee = (employeeId) => axios.delete(API_URL + '/' + employeeId);
+
+  {/*export const deleteEmployee = async (id) => {
     return await axios.delete(`${API_URL}/${id}`);
-  };
+  };*/}
+  

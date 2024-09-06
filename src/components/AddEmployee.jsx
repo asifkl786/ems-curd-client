@@ -13,7 +13,7 @@ const Employee = () => {
     dateofbirth: '',
     gender: '',
     country: '',
-    file: '',
+    picture: '',
   });
 
 
@@ -46,7 +46,7 @@ const Employee = () => {
             <form onSubmit={handleSubmit}>
               <div className='row gap-2 grid grid-cols-2'>
                 <div className="mb-4">
-                  <label htmlFor="name" className="block text-gray-700 mb-1">
+                  <label htmlFor="firstname" className="block text-gray-700 mb-1">
                     First Name
                   </label>
                   <input
@@ -94,7 +94,7 @@ const Employee = () => {
                   />
                 </div>
                 <div className="mb-4">
-                <label htmlFor="message" className="block text-gray-700 mb-1">
+                <label htmlFor="mobilenumber" className="block text-gray-700 mb-1">
                   Mobile Number
                 </label>
                 <input
@@ -112,7 +112,7 @@ const Employee = () => {
 
               <div className='row gap-2 grid grid-cols-2'>
                 <div className="mb-4">
-                  <label htmlFor="lastname" className="block text-gray-700 mb-1">
+                  <label htmlFor="dateofbirth" className="block text-gray-700 mb-1">
                     Date of Birth
                   </label>
                   <input

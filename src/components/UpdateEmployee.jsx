@@ -18,10 +18,13 @@ const UpdateEmployee = () => {
 
   const [errors, setErrors] = useState({
       firstName: "",
-      middleName:'',
       lastName:'',
       email:'',
-      mobileNumber:''
+      mobileNumber:'',
+      dateofbirth:'',
+      gender:'',
+      country:'',
+      picture:''
   })
    
   
@@ -37,6 +40,10 @@ const UpdateEmployee = () => {
                   setlastName(response.data.lastName);
                   setEmail(response.data.email);
                   setMobileNumber(response.data.mobileNumber);
+                  setDateOfBirth(response.data.dateofbirth);
+                  setGender(response.data.gender);
+                  setCountry(response.data.country);
+                  setPicture(response.data.picture);
               }).catch(error => {
                   console.error(error)
               })

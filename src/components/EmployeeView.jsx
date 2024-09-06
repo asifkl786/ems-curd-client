@@ -9,6 +9,10 @@ function EmployeeView() {
   const [lastName, setlastName] = useState([]);
   const [email, setEmail] = useState([]);
   const [mobileNumber , setMobileNumber] = useState([]);
+  const [dateofbirth, setDateOfBirth] = useState([]);
+  const [gender, setGender] = useState([]);
+  const [country, setCountry] = useState([]);
+  const [picture , setPicture] = useState([]);
   
 
   const [errors, setErrors] = useState({
@@ -28,6 +32,10 @@ function EmployeeView() {
                   setlastName(response.data.lastName);
                   setEmail(response.data.email);
                   setMobileNumber(response.data.mobileNumber);
+                  setDateOfBirth(response.data.dateofbirth);
+                  setGender(response.data.gender);
+                  setCountry(response.data.country);
+                  setPicture(response.data.picture);
               }).catch(error => {
                   console.error(error)
               })
@@ -45,10 +53,10 @@ function EmployeeView() {
       <p><strong>Last Name:</strong>{lastName}</p>
       <p><strong>Email:</strong>{email}</p>
       <p><strong>Mobile Number:</strong>{mobileNumber}</p>
-      <p><strong>Date Of Birth:</strong></p>
-      <p><strong>Gender:</strong></p>
-      <p><strong>Country Name:</strong></p>
-      <p><strong>Picture:</strong></p>
+      <p><strong>Date Of Birth:</strong>{dateofbirth}</p>
+      <p><strong>Gender:</strong>{gender}</p>
+      <p><strong>Country Name:</strong>{country}</p>
+      <p><strong>Picture:</strong>{picture}</p>
       <p><strong>Position:</strong></p>
     {/*
      <div>

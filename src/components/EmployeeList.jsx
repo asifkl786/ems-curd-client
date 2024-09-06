@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
-import { fetchEmployees } from '../services/EmployeeService';
+import { fetchEmployees,deleteEmployee } from '../services/EmployeeService';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -36,22 +36,26 @@ function EmployeeList() {
     setEmployees(employees.filter(employee => employee.id !== id));
   };
 
+  // This method delete employee from the table
+  function removeEmployee(id){
+    console.log(id);
+    deleteEmployee(id).then((response) =>{
+      loadEmployees();
+    }).catch(error => {
+        console.error(error)
+    })
+}
+
 
   return (
     <div className="container mx-auto p-10">
       <h1 className="text-2xl font-bold mb-4 text-center bg-indigo-950 text-white">Employee List</h1>
-      {/* <button
-        className="mb-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
-        <Link to="/add-employee">Create New Employee</Link>
-      </button>*/}
-     
-
       <table className="min-w-full bg-white rounded-lg shadow-md">
         <thead>
           <tr className="bg-slate-400">
             <th className="py-2 px-4 border-b-2 border-gray-200">Id</th>
-            <th className="py-2 px-4 border-b-2 border-gray-200">First_Name</th>
-            <th className="py-2 px-4 border-b-2 border-gray-200">Last_Name</th>
+            <th className="py-2 px-4 border-b-2 border-gray-200">F_Name</th>
+            <th className="py-2 px-4 border-b-2 border-gray-200">L_Name</th>
             <th className="py-2 px-4 border-b-2 border-gray-200">Email</th>
             <th className="py-2 px-4 border-b-2 border-gray-200">Mobile</th>
             <th className="py-2 px-4 border-b-2 border-gray-200">D.O.B</th>
@@ -69,11 +73,13 @@ function EmployeeList() {
               <td className="py-2 px-4 border-b">{employee.lastName}</td>
               <td className="py-2 px-4 border-b">{employee.email}</td>
               <td className="py-2 px-4 border-b">{employee.mobileNumber}</td>
-              <td className="py-2 px-4 border-b">{employee.position}</td>
+              <td className="py-2 px-4 border-b">{employee.dateofbirth}</td>
+              <td className="py-2 px-4 border-b">{employee.gender}</td>
+              <td className="py-2 px-4 border-b">{employee.country}</td>
+              <td className="py-2 px-4 border-b">{employee.picture}</td>
               <td className="py-2 px-4 border-b flex space-x-2">
                 <button
                   className="bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600"
-                 // onClick={() => handleView(employee)}
                   onClick={() => ViewEmployee(employee.id)}
                 >
                   <AiOutlineEye size={20} />
@@ -86,7 +92,8 @@ function EmployeeList() {
                 </button>
                 <button
                   className="bg-red-500 text-white px-4 py-1 rounded-md hover:bg-red-600"
-                  onClick={() => handleDelete(employee.id)}
+                 // onClick={() => handleDelete(employee.id)} 
+                  onClick={() => removeEmployee(employee.id)}
                 >
                 <AiOutlineDelete size={20} />
                 </button>
