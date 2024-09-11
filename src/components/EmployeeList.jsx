@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { fetchEmployees,deleteEmployee } from '../services/EmployeeService';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function EmployeeList() {
@@ -38,10 +40,14 @@ function EmployeeList() {
 
   // This method delete employee from the table
   function removeEmployee(id){
+    toast.success('Employee Delete Successfully...',{
+      position: "top-center",theme: "colored"
+   });
     console.log(id);
     deleteEmployee(id).then((response) =>{
       loadEmployees();
     }).catch(error => {
+        toast.error("Something went wrong")
         console.error(error)
     })
 }

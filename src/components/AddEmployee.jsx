@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import { createEmployee } from '../services/EmployeeService';
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Employee = () => {
   
@@ -31,10 +34,14 @@ const Employee = () => {
     e.preventDefault();
     // Handle form submission logic here
     createEmployee(formData).then((response) => {
+      toast.success('Employee Add Successfully...',{
+         position: "top-center",theme: "colored"
+      });
         console.log(response.data);
         navigator('/')
         }).catch(error => {
         console.error(error);
+        toast.error("Something went wrong")
     })
     console.log('Form Data Submitted:', formData);
   };

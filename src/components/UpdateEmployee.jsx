@@ -1,6 +1,8 @@
 import  React,{ useEffect, useState } from "react";
 import { useParams,useNavigate } from 'react-router-dom';
 import { getEmployee,updateEmployee } from "../services/EmployeeService";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const UpdateEmployee = () => {
@@ -56,10 +58,14 @@ const UpdateEmployee = () => {
     // Handle form submission logic here
     const formData = {firstName,lastName,email,mobileNumber,gender,dateofbirth,file,country};
     updateEmployee(id,formData).then((response) => {
+      toast.success('Update Employee Successfully...',{
+        position: "top-center",theme: "colored"
+     });
       console.log(response.data);
       navigator('/')
       }).catch(error => {
-      console.error(error);
+        toast.error("Something went wrong") 
+        console.error(error);
   })
   console.log('Form Data Submitted:', formData);
   

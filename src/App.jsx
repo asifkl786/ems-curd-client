@@ -8,9 +8,9 @@ import UpdateEmployee from "./components/UpdateEmployee";
 
 
 export default function App() {
+
   return (
     <>
-     
      <Router>
        <Navbar />
        <Routes>
